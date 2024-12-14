@@ -15,7 +15,7 @@ const getUserForSlidbar = async (req: CustomRequest, res: Response) => {
             return responseMsg(res, false, "User not authienticated", 401);
         }
 
-        const filterUsers = await UserModel.find({ _id: { $ne: loggedInUser._id } });
+        const filterUsers = await UserModel.find({ _id: { $ne: loggedInUser._id } }, { email: 0, username: 0, gender: 0, isVerified: 0, password: 0, verifyCode: 0 });
 
         return responseMsg(res, true, filterUsers, 200);
 

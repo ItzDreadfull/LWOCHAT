@@ -13,7 +13,7 @@ interface CustomRequest extends Request {
 
 export const sendMessage = async (req: CustomRequest, res: Response) => {
     try {
-        const { message } = req.body;
+        const { msg: message } = req.body;
         const { id: receiverId } = req.params;
         const sender = req.user;
         if (!sender) {
@@ -78,6 +78,7 @@ export const getMessage = async (req: CustomRequest, res: Response) => {
         if (!conversation) {
             return responseMsg(res, false, [], 200);
         }
+
         return responseMsg(res, true, conversation.messages, 200);
 
 

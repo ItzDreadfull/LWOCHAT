@@ -2,18 +2,22 @@ import mongoose, { Document, Schema } from "mongoose";
 
 
 export interface User extends Document {
+    fullname: string,
     username: string;
     email: string;
     password: string;
     verifyCode: string;
     isVerified: boolean,
-    isAcceptingMessage: boolean;
-    fullname: string,
     gender: string,
+    profilePic: string,
     phone_no: string
 }
 
 const UserSchema: Schema<User> = new Schema({
+    fullname: {
+        type: String,
+        required: true,
+    },
     username: {
         type: String,
         required: [true, "Username is required"],
@@ -36,21 +40,16 @@ const UserSchema: Schema<User> = new Schema({
     },
     isVerified: {
         type: Boolean,
-        default: true,
-    },
-    isAcceptingMessage: {
-        type: Boolean,
-        default: true,
-    },
-
-    fullname: {
-        type: String,
-        required: false,
-
+        default: false,
     },
     gender: {
         type: String,
         required: false,
+        default: "Not given"
+    },
+    profilePic: {
+        type: String,
+        required: true,
         default: "Not given"
     },
     phone_no: {

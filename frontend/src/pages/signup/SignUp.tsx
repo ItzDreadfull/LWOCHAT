@@ -1,6 +1,29 @@
+import { Link } from "react-router-dom";
 import GenderCheckbox from "./GenerateCheckbox";
+import { useState } from "react";
+import useSignup from "../../hooks/useSignup";
 
 const SignUp = () => {
+  const [inputs, setInput] = useState({
+    fullName: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+  });
+
+  const { loading, signup } = useSignup();
+
+  const handelCheckboxChange = (gender: string) => {
+    setInput({ ...inputs, gender });
+  };
+
+  const handelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await signup(inputs);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
       <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 ">
@@ -8,7 +31,7 @@ const SignUp = () => {
           Sign Up <span className="text-blue-500">WinChat</span>
         </h1>
 
-        <form action="">
+        <form onSubmit={handelSubmit}>
           <div>
             <label className="label p-2">
               <span className="text-base label-text">Full Name</span>
@@ -17,6 +40,10 @@ const SignUp = () => {
               type="text"
               placeholder="Enter your fullname"
               className="input w-full input-bordered h-10"
+              value={inputs.fullName}
+              onChange={(e) =>
+                setInput({ ...inputs, fullName: e.target.value })
+              }
             />
           </div>
           <div>
@@ -27,6 +54,10 @@ const SignUp = () => {
               type="text"
               placeholder="Create a unique username"
               className="input w-full input-bordered h-10"
+              value={inputs.username}
+              onChange={(e) =>
+                setInput({ ...inputs, username: e.target.value })
+              }
             />
           </div>
           <div>
@@ -34,9 +65,11 @@ const SignUp = () => {
               <span className="text-base label-text">Email</span>
             </label>
             <input
-              type="Email"
+              type="email"
               placeholder="Enter your Email"
               className="input w-full input-bordered h-10"
+              value={inputs.email}
+              onChange={(e) => setInput({ ...inputs, email: e.target.value })}
             />
           </div>
           <div>
@@ -45,23 +78,53 @@ const SignUp = () => {
             </label>
             <input
               type="password"
-              placeholder="Enter password"
+              placeholder="Enter Password"
               className="input w-full input-bordered h-10"
+              value={inputs.password}
+              onChange={(e) =>
+                setInput({ ...inputs, password: e.target.value })
+              }
+            />
+          </div>
+          <div>
+            <label className="label p-2">
+              <span className="text-base label-text">Confirm Password</span>
+            </label>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              className="input w-full input-bordered h-10"
+              value={inputs.confirmPassword}
+              onChange={(e) =>
+                setInput({ ...inputs, confirmPassword: e.target.value })
+              }
             />
           </div>
 
           {/* GENDER CHECKBOX GOES HERE */}
-          <GenderCheckbox />
+          <GenderCheckbox
+            onCheckboxChange={handelCheckboxChange}
+            selectedGender={inputs.gender}
+          />
 
-          <a
-            href="#"
+          <Link
+            to={"/login"}
             className="text-sm hover:underline hover:text-blue-600 mt-2"
           >
             {"Already"} have an account?
-          </a>
+          </Link>
 
           <div>
-            <button className="btn btn-block btn-sm mt-2">Sign Up</button>
+            <button
+              className="btn btn-block btn-sm mt-2 border border-slate-700"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="loading loading-spinner text-info"></span>
+              ) : (
+                "Sign Up"
+              )}
+            </button>
           </div>
         </form>
       </div>
