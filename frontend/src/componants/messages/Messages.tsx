@@ -3,9 +3,11 @@ import useGetMessages from "../../hooks/useGetMessages";
 import { msgResponseType } from "../../zustand/useConversation";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
 import Message from "./Message";
+import useListenMessages from "../../hooks/useListenMessage";
 
 const Messages = () => {
   const { loading, messages } = useGetMessages();
+  useListenMessages();
   const lstMsgRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ const Messages = () => {
         messages.length > 0 &&
         messages.map((el: msgResponseType, idx: number) => (
           <div
-            key={el._id}
+            key={el._id || idx}
             ref={idx === messages.length - 1 ? lstMsgRef : null}
           >
             <Message allMsg={el} />

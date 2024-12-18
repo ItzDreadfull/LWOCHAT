@@ -10,6 +10,7 @@ export interface msgResponseType {
     updatedAt: string;
     _id: string;
     profilePic: string;
+    shouldShake: boolean;
 }
 
 

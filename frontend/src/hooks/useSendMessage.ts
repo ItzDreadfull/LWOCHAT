@@ -12,14 +12,16 @@ const useSendMessage = () => {
         try {
             const res = await fetch(`/api/messages/send/${selectedConversation?._id}`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "content-Type": "application/json" },
                 body: JSON.stringify({ msg })
             })
 
             const data = await res.json();
             if (data.success === false) throw new Error(data.message)
 
-            setMessages([...messages, data])
+            // console.log(data);
+
+            setMessages([...messages, data.message])
 
         } catch (error: any) {
             toast.error(error.message);

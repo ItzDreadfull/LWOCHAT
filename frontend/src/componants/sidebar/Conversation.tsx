@@ -1,3 +1,4 @@
+import { useSocketContext } from "../../context/SocketContex";
 import { ConversationType } from "../../hooks/useGetConversations";
 import useConversation from "../../zustand/useConversation";
 
@@ -12,10 +13,11 @@ const Conversation: React.FC<ConPropsTypes> = ({
   emoji,
   lastIdx,
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { selectedConversation, setSelectedConversation } = useConversation();
 
   const isSelected = selectedConversation?._id === conversation._id;
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers.includes(conversation._id);
 
   return (
     <>
@@ -25,7 +27,7 @@ const Conversation: React.FC<ConPropsTypes> = ({
       `}
         onClick={() => setSelectedConversation(conversation)}
       >
-        <div className="avatar online">
+        <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div className="w-12 rounded-full">
             <img src={conversation.profilePic} />
           </div>

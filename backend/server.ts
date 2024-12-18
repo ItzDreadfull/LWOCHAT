@@ -7,15 +7,17 @@ import messageRoutes from './routes/messageRoutes';
 import userRoutes from './routes/userRoutes';
 
 import dbConnect from './db/dbConnect';
+import { app, server } from './socket/socket';
 
 dotenv.config();
 
-
-const app = express()
 const PORT = process.env.PORT || 5000;
 
-app.use(express.json());
+
+
+app.use(express.json()); //to sparse the including results with JSON payloads (from req.body)
 app.use(cookieParser());
+
 // app.use(express.urlencoded({ extended: true }));
 
 
@@ -31,12 +33,8 @@ app.use("/api/users", userRoutes);
 // })
 
 
-app.listen(PORT, () => {
-    try {
-        console.log(`app Running on port ${PORT}`);
-        dbConnect();
-    } catch (error) {
-        console.log("some error in server or db", error);
-    }
+server.listen(PORT, () => {
+    dbConnect();
+    console.log(`app Running on port ${PORT}`);
 })
 

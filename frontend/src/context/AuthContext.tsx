@@ -1,8 +1,8 @@
 import React, { createContext, useState, ReactNode, useContext } from "react";
 
-interface User {
+export interface User {
   _id: string;
-  fullname: string;
+  fullName: string;
   profilePic: string;
 }
 

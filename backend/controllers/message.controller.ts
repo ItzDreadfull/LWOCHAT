@@ -4,6 +4,7 @@ import ConversationModel from "../models/conversationModel";
 import MessagesModel from "../models/MessageModel";
 import { Types } from "mongoose";
 import { User } from "../models/User";
+import { getReceiverSocketId, io } from "../socket/socket";
 
 
 
@@ -41,16 +42,20 @@ export const sendMessage = async (req: CustomRequest, res: Response) => {
             (conversation.messages as Types.ObjectId[]).push(mId);
 
 
-            // TODO - socate-Io for real time conversations
-
-
             // await conversation.save();
             // await newMessage.save();
             // shorthand of upper two commants
             await Promise.all([conversation.save(), newMessage.save()]);
 
-            return responseMsg(res, true, newMessage, 200);
 
+            //socate-Io for real time conversations
+            const receiverSocketId = getReceiverSocketId(receiverId);
+
+            // io.to(<socket_id>).emit() used to send events to specific clients
+            io.to(receiverSocketId).emit("newMessage", newMessage)
+
+
+            return responseMsg(res, true, newMessage, 200);
         }
         else {
             return responseMsg(res, false, "Internul server Error", 500);
