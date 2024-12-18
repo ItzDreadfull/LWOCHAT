@@ -1,16 +1,21 @@
 import { useEffect, useRef } from "react";
 import useGetMessages from "../../hooks/useGetMessages";
-import { msgResponseType } from "../../zustand/useConversation";
+import useConversation, {
+  msgResponseType,
+} from "../../zustand/useConversation";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
 import Message from "./Message";
 import useListenMessages from "../../hooks/useListenMessage";
 
 const Messages = () => {
+  useConversation();
   const { loading, messages } = useGetMessages();
   useListenMessages();
   const lstMsgRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    // const messagesToShow = messages.filter(msg => msg.receiverId === selectedConversation?._id);
+
     setTimeout(() => {
       if (lstMsgRef.current)
         lstMsgRef.current?.scrollIntoView({ behavior: "smooth" });

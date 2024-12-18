@@ -4,7 +4,8 @@
   "main": "server.ts",
   "scripts": {
     "start": "ts-node --project tsconfig.json backend/server.ts",
-    "dev": "nodemon --watch backend --exec ts-node --project tsconfig.json backend/server.ts"
+    "dev": "nodemon --watch backend --exec ts-node --project tsconfig.json backend/server.ts",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
