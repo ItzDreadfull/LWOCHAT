@@ -50,10 +50,10 @@ export const sendMessage = async (req: CustomRequest, res: Response) => {
 
             //socate-Io for real time conversations
             const receiverSocketId = getReceiverSocketId(receiverId);
-
-            // io.to(<socket_id>).emit() used to send events to specific clients
-            io.to(receiverSocketId).emit("newMessage", newMessage)
-
+            if (receiverSocketId) {
+                // io.to(<socket_id>).emit() used to send events to specific clients
+                io.to(receiverSocketId).emit("newMessage", newMessage)
+            }
 
             return responseMsg(res, true, newMessage, 200);
         }

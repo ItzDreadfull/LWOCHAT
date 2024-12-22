@@ -14,12 +14,14 @@ const useListenMessages = () => {
 
         const handleNewMessages = (newMessages: msgResponseType) => {
             newMessages.shouldShake = true;
+            // const messagesToShow = messages.filter(msg => msg.receiverId === selectedConversation?._id);
             const sound: HTMLAudioElement = new Audio(notificationSound);
             sound.play();
+
             setMessages([...messages, newMessages]);
         };
-
         socket.on("newMessage", handleNewMessages);
+
 
         // Cleanup function
         return () => {
