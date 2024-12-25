@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "server.ts",
   "scripts": {
+    "server": "nodemon backend/server.js",
     "start": "ts-node --project tsconfig.json backend/server.ts",
-    "dev": "nodemon --watch backend --exec ts-node --project tsconfig.json backend/server.ts",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],

@@ -8,28 +8,29 @@ import Message from "./Message";
 import useListenMessages from "../../hooks/useListenMessage";
 
 const Messages = () => {
-  useConversation();
+  const { selectedConversation } = useConversation();
   const { loading, messages } = useGetMessages();
   useListenMessages();
   const lstMsgRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // const messagesToShow = messages.filter(msg => msg.receiverId === selectedConversation?._id);
-
     setTimeout(() => {
       if (lstMsgRef.current)
         lstMsgRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 100);
   }, [messages]);
-
+  const messagesToShow = messages.filter(
+    (msg) => msg.receiverId === selectedConversation?._id
+  );
+  console.log(messagesToShow);
   return (
     <div className="px-1 flex-1 overflow-auto">
       {!loading &&
-        messages.length > 0 &&
-        messages.map((el: msgResponseType, idx: number) => (
+        messagesToShow.length > 0 &&
+        messagesToShow.map((el: msgResponseType, idx: number) => (
           <div
             key={el._id || idx}
-            ref={idx === messages.length - 1 ? lstMsgRef : null}
+            ref={idx === messagesToShow.length - 1 ? lstMsgRef : null}
           >
             <Message allMsg={el} />
           </div>

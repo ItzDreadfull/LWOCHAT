@@ -13,6 +13,7 @@ const genarateAwtToken = (userId: string, res: Response) => {
         maxAge: 15 * 24 * 60 * 60 * 1000, //MS
         httpOnly: true, //prevent XSS attackes cross-site scripting
         sameSite: 'strict', // Helps prevent CSRF
+        secure: process.env.NODE_ENV === 'production' ? true : false
     })
 }
 

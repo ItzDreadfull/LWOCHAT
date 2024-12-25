@@ -81,7 +81,7 @@ export const getMessage = async (req: CustomRequest, res: Response) => {
         }).populate("messages");
 
         if (!conversation) {
-            return responseMsg(res, false, [], 200);
+            return responseMsg(res, false, "some error occured no conversation found", 500);
         }
 
         return responseMsg(res, true, conversation.messages, 200);

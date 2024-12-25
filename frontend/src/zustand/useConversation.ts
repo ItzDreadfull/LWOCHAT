@@ -18,7 +18,7 @@ export interface msgResponseType {
 interface ConversationState {
     selectedConversation: ConversationType | null;               // Assuming it's a string or null, adjust if needed
     messages: msgResponseType[];                               // Assuming messages are strings, adjust if needed
-    setSelectedConversation: (selectedConversation: ConversationType | any) => void;
+    setSelectedConversation: (selectedConversation: ConversationType | null) => void;
     setMessages: (messages: msgResponseType[]) => void;
 }
 

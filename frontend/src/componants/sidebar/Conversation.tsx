@@ -17,7 +17,7 @@ const Conversation: React.FC<ConPropsTypes> = ({
 
   const isSelected = selectedConversation?._id === conversation._id;
   const { onlineUsers } = useSocketContext();
-  const isOnline = onlineUsers.includes(conversation._id);
+  const isOnline = onlineUsers.some((user) => user._id === conversation._id);
 
   return (
     <>

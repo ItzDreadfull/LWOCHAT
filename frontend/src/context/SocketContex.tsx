@@ -12,7 +12,7 @@ import io, { Socket } from "socket.io-client";
 // Define the type for the context value (update this as per your actual use case)
 interface SocketContextValue {
   socket: Socket | null;
-  onlineUsers: User[] | any;
+  onlineUsers: User[];
 }
 
 // Create the context with an initial value
@@ -38,7 +38,7 @@ export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({
   children,
 }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [onlineUsers, setOnlineUsers] = useState<User[] | any>([]);
+  const [onlineUsers, setOnlineUsers] = useState<User[]>([]);
   const { authUser } = useAuthContext();
 
   useEffect(() => {
