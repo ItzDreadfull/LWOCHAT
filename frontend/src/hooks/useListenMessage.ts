@@ -8,18 +8,17 @@ import notificationSound from "../assets/sounds/nofi_sound.mp3"
 const useListenMessages = () => {
     const { socket } = useSocketContext()
     const { messages, setMessages } = useConversation()
+    const sound: HTMLAudioElement = new Audio(notificationSound);
 
     useEffect(() => {
         if (!socket) return;
 
-        const handleNewMessages = (newMessages: msgResponseType) => {
+        socket.on("newMessage", (newMessages: msgResponseType) => {
             newMessages.shouldShake = true;
-            const sound: HTMLAudioElement = new Audio(notificationSound);
             sound.play();
 
             setMessages([...messages, newMessages]);
-        };
-        socket.on("newMessage", handleNewMessages);
+        });
 
 
         // Cleanup function

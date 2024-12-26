@@ -52,12 +52,17 @@ export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({
       setSocket(socketInstance);
 
       if (socketInstance) {
+        socketInstance.on("newMessage", (newMessage) => {
+          // Update the conversation state here
+          console.log("New message received:", newMessage);
+          // Trigger state update for the active chat (you'll need additional logic to target the correct conversation)
+        });
+
         // Example: Listening for online users from the server
         socketInstance.on("getOnlineUsers", (users: User[]) => {
           setOnlineUsers(users);
         });
       }
-
       return () => {
         socketInstance.close();
         setSocket(null);

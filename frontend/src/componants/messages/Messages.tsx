@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useGetMessages from "../../hooks/useGetMessages";
 import useConversation, {
   msgResponseType,
@@ -10,27 +10,30 @@ import useListenMessages from "../../hooks/useListenMessage";
 const Messages = () => {
   const { selectedConversation } = useConversation();
   const { loading, messages } = useGetMessages();
+  const [msgToShow, setMSgToShow] = useState<msgResponseType[]>([]);
   useListenMessages();
   const lstMsgRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const messagesToShow = messages.filter(
+      (msg) => msg.receiverId === selectedConversation?._id
+    );
+    setMSgToShow(messagesToShow);
+
     setTimeout(() => {
       if (lstMsgRef.current)
         lstMsgRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 100);
-  }, [messages]);
-  const messagesToShow = messages.filter(
-    (msg) => msg.receiverId === selectedConversation?._id
-  );
-  console.log(messagesToShow);
+  }, [messages, selectedConversation?._id]);
+  console.log(msgToShow);
   return (
     <div className="px-1 flex-1 overflow-auto">
       {!loading &&
-        messagesToShow.length > 0 &&
-        messagesToShow.map((el: msgResponseType, idx: number) => (
+        messages.length > 0 &&
+        messages.map((el: msgResponseType, idx: number) => (
           <div
             key={el._id || idx}
-            ref={idx === messagesToShow.length - 1 ? lstMsgRef : null}
+            ref={idx === messages.length - 1 ? lstMsgRef : null}
           >
             <Message allMsg={el} />
           </div>
