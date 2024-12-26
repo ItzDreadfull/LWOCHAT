@@ -9,6 +9,8 @@ import {
 import { useAuthContext, User } from "./AuthContext";
 import io, { Socket } from "socket.io-client";
 
+const URL = process.env.Bak_URL || "http://localhost:8080";
+
 // Define the type for the context value (update this as per your actual use case)
 interface SocketContextValue {
   socket: Socket | null;
@@ -43,7 +45,7 @@ export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({
 
   useEffect(() => {
     if (authUser && !socket) {
-      const socketInstance = io("http://localhost:8080", {
+      const socketInstance = io(URL, {
         query: {
           userId: authUser._id,
         },

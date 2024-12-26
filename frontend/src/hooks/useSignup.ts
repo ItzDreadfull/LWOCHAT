@@ -31,7 +31,7 @@ const useSignup = () => {
             })
 
             const data = await res.json();
-            console.log(data);
+            // console.log(data);
 
             if (data.success === false) {
                 console.log("dkjfn")
