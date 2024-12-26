@@ -14,7 +14,6 @@ const useListenMessages = () => {
 
         const handleNewMessages = (newMessages: msgResponseType) => {
             newMessages.shouldShake = true;
-            // const messagesToShow = messages.filter(msg => msg.receiverId === selectedConversation?._id);
             const sound: HTMLAudioElement = new Audio(notificationSound);
             sound.play();
 
